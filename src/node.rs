@@ -66,6 +66,38 @@ impl Nodes {
             };
         });
     }
+    pub fn set_merchant_name(&mut self, name: String){
+        self.add_or_update(Node { code: 59, value: Value::Value(name) });
+    }
+    pub fn get_merchant_name(self)-> Option<String>{
+        self.get_str_value(59)
+    }
+    pub fn set_merchant_city(&mut self, city: String){
+        self.add_or_update(Node { code: 60, value: Value::Value(city) });
+    }
+    pub fn get_merchant_city(self)-> Option<String>{
+        self.get_str_value(60)
+    }
+    pub fn set_postal_code(&mut self, code: String){
+        self.add_or_update(Node { code: 61, value: Value::Value(code) });
+    }
+    pub fn get_postal_code(self)-> Option<String>{
+        self.get_str_value(61)
+    }
+    pub fn get_str_value(self, code: u8) -> Option<String> {
+        if let Some(value) = self.get(code){
+            match value {
+                Value::Value(val) => {
+                    Some(val.to_string())
+                },
+                Value::Nodes(_)=>{
+                    None
+                }
+            }
+        }else {
+            None
+        }
+    }
     pub fn set_amount(&mut self, amount: usize){
         self.nodes.iter_mut().for_each(| f| {
             if f.code == 1 || f.code == 58 {
@@ -89,6 +121,13 @@ impl Nodes {
                 Err(val.into())
             }
         }
+    }
+    pub fn get<'a>(&'a self, code: u8) -> Option<&'a Value>{
+        self.nodes.iter().find(|node|{
+            node.code == code
+        }).map(|node|{
+            &node.value
+        })
     }
     pub fn from_str_to_node_vec(code: &str) -> Result<Value, Box<dyn Error>>{
         let mut cursor = Cursor::new(code);

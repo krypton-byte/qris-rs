@@ -36,7 +36,7 @@ use qris::node::Nodes;
 
 fn main(){
     let content = String::from("00020101021126710019ID.CO.CIMBNIAGA.WWW011878728356757817222102150002186871651250303UMI51450015ID.OR.QRNPG.WWW0215ID81275673266770303UMI5204599953033605802ID5914AABBCCD*6714516006KEDIRI61054423462120708123456786304097D");
-    match &Nodes::from_code(&content) {
+    match &Nodes::from_str(&content) {
         Ok(parsed) => {
             println!("{:#?}", parsed);
         }
@@ -54,7 +54,7 @@ use qris::node::Nodes;
 
 fn main(){
     let content = String::from("00020101021126710019ID.CO.CIMBNIAGA.WWW011878728356757817222102150002186871651250303UMI51450015ID.OR.QRNPG.WWW0215ID81275673266770303UMI5204599953033605802ID5914AABBCCD*6714516006KEDIRI61054423462120708123456786304097D");
-    match &mut Nodes::from_code(&content) {
+    match &mut Nodes::from_str(&content) {
         Ok(parsed) => {
             parsed.set_amount(20_000);
             parsed.rewrite_crc16();

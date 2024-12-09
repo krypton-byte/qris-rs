@@ -79,8 +79,8 @@ impl Nodes {
             }
         });
     }
-    pub fn from_code(code: &str) -> Result<Self, Box<dyn Error>> {
-        let node_vec = Nodes::from_code_to_node_vec(code)?;
+    pub fn from_str(code: &str) -> Result<Self, Box<dyn Error>> {
+        let node_vec = Nodes::from_str_to_node_vec(code)?;
         match node_vec {
             Value::Nodes(nodes) => {
                 Ok(Nodes{nodes})
@@ -90,7 +90,7 @@ impl Nodes {
             }
         }
     }
-    pub fn from_code_to_node_vec(code: &str) -> Result<Value, Box<dyn Error>>{
+    pub fn from_str_to_node_vec(code: &str) -> Result<Value, Box<dyn Error>>{
         let mut cursor = Cursor::new(code);
         let mut result: Vec<Node> = Vec::new();
         loop {             
@@ -100,7 +100,7 @@ impl Nodes {
                     let size = Nodes::read_io(&mut cursor, 2).unwrap();
                     let size_in: u8 = size.parse().unwrap();
                     if HAS_CHILDREN.contains(&code_in) {
-                        let children = Nodes::from_code_to_node_vec(&Nodes::read_io(&mut cursor, size_in).unwrap())?;
+                        let children = Nodes::from_str_to_node_vec(&Nodes::read_io(&mut cursor, size_in).unwrap())?;
                         match children {
                             Value::Nodes(nodes) => {
                                 result.push(Node { code: code_in, value: Value::Nodes(nodes)});

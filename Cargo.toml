@@ -1,0 +1,14 @@
+[package]
+name = "qris"
+version = "0.1.0"
+edition = "2024"
+authors = ["krypton-byte <rosid6434@gmail.com>"] 
+description = "QRIS Parser & Editor"
+license = "MIT"
+repository = "https://github.com/username/nama_library"
+documentation = "https://docs.rs/nama_library"
+keywords = ["qris", "editor","parser"]
+categories = ["development-tools::build-tools"]
+homepage = "https://github.com/krypton-byte/qris-rs"  
+[dependencies]
+

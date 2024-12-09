@@ -8,7 +8,7 @@ license = "MIT"
 repository = "https://github.com/username/nama_library"
 documentation = "https://docs.rs/nama_library"
 keywords = ["qris", "editor","parser"]
-categories = ["development-tools::build-tools"]
+categories = ["data-structures", "encoding", "finance"]
 homepage = "https://github.com/krypton-byte/qris-rs"  
 [dependencies]
 

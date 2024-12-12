@@ -140,11 +140,8 @@ impl Nodes {
                     let size_in: u8 = size.parse().unwrap();
                     if HAS_CHILDREN.contains(&code_in) {
                         let children = Nodes::from_str_to_node_vec(&Nodes::read_io(&mut cursor, size_in).unwrap())?;
-                        match children {
-                            Value::Nodes(nodes) => {
-                                result.push(Node { code: code_in, value: Value::Nodes(nodes)});
-                            },
-                            Value::Value(_)=>{}
+                        if let Value::Nodes(nodes) = children {
+                            result.push(Node { code: code_in, value: Value::Nodes(nodes)});
                         }
                     }else{
                         result.push(Node{code: code_in, value: Value::Value(Nodes::read_io(&mut cursor, size_in).unwrap())});

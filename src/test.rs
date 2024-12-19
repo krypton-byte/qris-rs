@@ -47,4 +47,17 @@ mod tests {
         assert!(result_parse.get_postal_code().unwrap() == name_cmp);
         Ok(())
     }
+    #[test]
+    fn multiple_test()-> Result<(), Box<dyn Error>>{
+        let nodes  = Nodes::from_str(QRIS)?;
+        let mut nodes_target  = Nodes::from_str(QRIS)?;
+        nodes_target.set_merchant_city(format!("{}_modified", nodes.get_merchant_city().unwrap()));
+        nodes_target.set_merchant_name(format!("{}_modified", nodes.get_merchant_name().unwrap()));
+        nodes_target.set_postal_code(format!("{}_modified", nodes.get_postal_code().unwrap()));
+        nodes_target.rewrite_crc16();
+        assert!(nodes_target.get_merchant_city().unwrap() == format!("{}_modified", nodes.get_merchant_city().unwrap()));
+        assert!(nodes_target.get_merchant_name().unwrap() == format!("{}_modified", nodes.get_merchant_name().unwrap()));
+        assert!(nodes_target.get_postal_code().unwrap() == format!("{}_modified", nodes.get_postal_code().unwrap()));
+        Ok(())
+    }
 }

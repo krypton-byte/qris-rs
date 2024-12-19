@@ -69,26 +69,26 @@ impl Nodes {
     pub fn set_merchant_name(&mut self, name: String){
         self.add_or_update(Node { code: 59, value: Value::Value(name) });
     }
-    pub fn get_merchant_name(self)-> Option<String>{
+    pub fn get_merchant_name(&self)-> Option<&str>{
         self.get_str_value(59)
     }
     pub fn set_merchant_city(&mut self, city: String){
         self.add_or_update(Node { code: 60, value: Value::Value(city) });
     }
-    pub fn get_merchant_city(self)-> Option<String>{
+    pub fn get_merchant_city(&self)-> Option<&str>{
         self.get_str_value(60)
     }
     pub fn set_postal_code(&mut self, code: String){
         self.add_or_update(Node { code: 61, value: Value::Value(code) });
     }
-    pub fn get_postal_code(self)-> Option<String>{
+    pub fn get_postal_code(&self)-> Option<&str>{
         self.get_str_value(61)
     }
-    pub fn get_str_value(self, code: u8) -> Option<String> {
+    pub fn get_str_value(&self, code: u8) -> Option<&str> {
         if let Some(value) = self.get(code){
-            match value {
+            match &value {
                 Value::Value(val) => {
-                    Some(val.to_string())
+                    Some(val)
                 },
                 Value::Nodes(_)=>{
                     None
@@ -122,7 +122,7 @@ impl Nodes {
             }
         }
     }
-    pub fn get<'a>(&'a self, code: u8) -> Option<&'a Value>{
+    pub fn get(&self, code: u8) -> Option<&Value>{
         self.nodes.iter().find(|node|{
             node.code == code
         }).map(|node|{
